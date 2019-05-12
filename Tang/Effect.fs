@@ -19,6 +19,13 @@ type CommitEffectResults = {
     profilesCreated : Map<int, Profile>
 }
 
+module CommitEffectResults =
+    let empty = {
+        followsCreated = Map.empty
+        identitiesCreated = Map.empty
+        profilesCreated = Map.empty
+    }
+
 type Effect<'a> =
     | Pure of 'a
     | Free of Effect seq * (CommitEffectResults -> Effect<'a>)

@@ -27,10 +27,16 @@ module Profile =
             <*> (Domain.Identity <!> Validator.required "identity" profile.identity)
             <*> (
                     ProfileFields.create
-                        <!> (Email.create "email" profile.email |> Validator.ofResult)
+                        <!> (Result.notNull profile.email
+                             |> Result.bind Email.create
+                             |> Validator.ofResult "email")
                         <*> (Option.ofObj profile.name |> Valid)
-                        <*> (Phone.create "phone" profile.phone |> Validator.ofResult)
-                        <*> (Username.create "username" profile.username |> Validator.ofResult)
+                        <*> (Result.notNull profile.phone
+                             |> Result.bind Phone.create
+                             |> Validator.ofResult "phone")
+                        <*> (Result.notNull profile.username
+                             |> Result.bind Username.create
+                             |> Validator.ofResult "username")
                 )
             
 

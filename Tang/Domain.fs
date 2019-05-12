@@ -8,19 +8,19 @@ module Identity =
 
 type Email = private Email of string
 module Email =
-    let create id email : Result<Email, string * string> = Email email |> Ok
+    let create email : Result<Email, string> = Email email |> Ok
     let value (Email x) = x
 
 
 type Phone = private Phone of string
 module Phone =
-    let create id phone : Result<Phone, string * string> = Phone phone |> Ok
+    let create phone : Result<Phone, string> = Phone phone |> Ok
     let value (Phone x) = x
 
 
 type Username = private Username of string
 module Username =
-    let create id username : Result<Username, string * string> = Username username |> Ok
+    let create username : Result<Username, string> = Username username |> Ok
     let value (Username x) = x
 
 
@@ -41,9 +41,20 @@ module ProfileFields =
 
 type Profile = Profile of int * Identity * ProfileFields
 module Profile =
-    let create identity profileId fields = Profile (identity, profileId, fields)
-
+    let create profileId identity fields = Profile (profileId, identity, fields)
+    let profileId (Profile (x, _, _)) = x
+    let identity (Profile (_, x, _)) = x
+    let fields (Profile (_, _, x)) = x
 
 type Follow = Follow of int * Identity * Identity
 module Follow =
     let create followId followedBy following = Follow (followId, followedBy, following)
+
+type Error =
+    | ProfileEmailTaken
+    | ProfileEmailNotVerified
+    | ProfileIdentityNotFound
+    | ProfileInvalid of (string * string) list
+    | ProfilePhoneTaken
+    | ProfilePhoneNotVerified
+    | ProfileUsernameTaken

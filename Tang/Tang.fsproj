@@ -5,14 +5,15 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Compile Include="Dto.fs" />
-        <Compile Include="Effect.fs" />
-        <Compile Include="Services.fs" />
-        <Compile Include="Validator.fs" />
         <Compile Include="Reader.fs" />
         <Compile Include="Writer.fs" />
         <Compile Include="ReaderWriter.fs" />
+        <Compile Include="Validator.fs" />
+        <Compile Include="Result.fs" />
         <Compile Include="Domain.fs" />
+        <Compile Include="Effect.fs" />
+        <Compile Include="Dto.fs" />
+        <Compile Include="Services.fs" />
     </ItemGroup>
 
 </Project>

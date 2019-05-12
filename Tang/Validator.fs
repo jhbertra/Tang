@@ -15,22 +15,18 @@ module Validator =
     let (<!>) fab va = map fab va
     let (<*) va vb = map (fun a -> fun _ -> a) va <*> vb
     let ( *>) va vb = map (fun _ -> fun b -> b) va <*> vb  
-    let ofResult = function
+    let ofResult id = function
     | Ok a -> Valid a
-    | Error e -> Invalid [e]
+    | Error e -> Invalid [(id, e)]
     let toResult = function
     | Valid a -> Ok a
     | Invalid e -> Error e
-    
-    let notNull id = function
-    | null -> Invalid [(id, "Required")]
-    | x -> Valid x
     
     let required id (nullable : Nullable<'a>) = 
         if nullable.HasValue then
             Valid nullable.Value
         else    
-            Invalid [(id, "Required")]
+            Invalid [(id, "required")]
     
     let mapIds f = function
     | Valid x -> Valid x
